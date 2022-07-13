@@ -86,10 +86,17 @@ class Api {
 
 }
 
+// const api = new Api({
+//   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-39',
+//   headers: {
+//     authorization: '9d821a34-237a-4eb7-aba2-4697d5f65cd4',
+//     'Content-Type': 'application/json'
+//   }
+// });
+
 const api = new Api({
-  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-39',
+  baseUrl: 'https://mesto.bakhar1993.nomorepartiesxyz.ru',
   headers: {
-    authorization: '9d821a34-237a-4eb7-aba2-4697d5f65cd4',
     'Content-Type': 'application/json'
   }
 });
