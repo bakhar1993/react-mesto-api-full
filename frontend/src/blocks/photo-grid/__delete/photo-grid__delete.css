@@ -1,0 +1,18 @@
+.photo-grid__delete {
+  visibility: hidden;
+  background-image: url(../../../images/delete-button.svg);
+  height: 19px;
+  width: 18px;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: center;
+  box-sizing: border-box;
+  border: 0;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
+.photo-grid__delete:hover {
+  opacity: 0.5;
+  cursor: pointer;
+}
