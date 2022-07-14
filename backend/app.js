@@ -2,13 +2,16 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const { celebrate, Joi, errors } = require('celebrate');
+const cors = require('cors');
 const { login, createUser } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 const NotFoundError = require('./errors/not-found-err');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
-const { PORT = 3000 } = process.env;
+const { PORT = 3001 } = process.env;
 const app = express();
+
+app.use(cors());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -18,14 +21,6 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,
-});
-
-app.use((req, res, next) => {
-  const { origin } = req.headers;
-  if (origin === 'https://mesto.bakhar1993.nomorepartiesxyz.ru') {
-    res.header('Access-Control-Allow-Origin', origin);
-  }
-  next();
 });
 
 app.post('/signin', celebrate({
@@ -67,3 +62,8 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(PORT, () => { console.log('Hello!!!', PORT); });
+
+// const allowedCors = [
+//   'https://mesto.bakhar1993.nomorepartiesxyz.ru',
+//   'http://mesto.bakhar1993.nomorepartiesxyz.ru',
+// ];

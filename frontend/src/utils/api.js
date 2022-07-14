@@ -95,7 +95,8 @@ class Api {
 // });
 
 const api = new Api({
-  baseUrl: 'https://mesto.bakhar1993.nomorepartiesxyz.ru',
+ // baseUrl: 'https://mesto.bakhar1993.nomorepartiesxyz.ru',
+baseUrl: 'http://localhost:3001',
   headers: {
     'Content-Type': 'application/json'
   }
