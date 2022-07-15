@@ -5,13 +5,19 @@ class Api {
     // тело конструктора
   }
 
-  getUserInfo() {
-    return fetch(`${this._baseUrl}/users/me`, { headers: this._headers })
+  getUserInfo(token) {
+    return fetch(`${this._baseUrl}/users/me`, { headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    }, })
       .then(this._chekingResponse)
   }
 
-  getInitialCards() {
-    return fetch(`${this._baseUrl}/cards`, { headers: this._headers })
+  getInitialCards(token) {
+    return fetch(`${this._baseUrl}/cards`, {   headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },})
       .then(this._chekingResponse)
   }
 

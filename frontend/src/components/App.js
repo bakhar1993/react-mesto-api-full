@@ -115,14 +115,15 @@ function App() {
 
   //Загрузка данных юзера и карточек
   function uploadDate() {
+    const token = localStorage.getItem("token");
     api
-      .getUserInfo()
+      .getUserInfo(token)
       .then((res) => {
         setCurrentUser(res);
       })
       .catch((error) => console.log(error));
     api
-      .getInitialCards()
+      .getInitialCards(token)
       .then((res) => {
         setCards(res);
       })
