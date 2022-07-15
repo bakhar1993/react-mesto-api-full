@@ -1,4 +1,4 @@
-export const BASE_URL = "http://mesto.bakhar1993.nomorepartiesxyz.ru";
+export const BASE_URL = "http://api.mesto.bakhar1993.nomorepartiesxyz.ru";
 
 const checkResponse = (res) => {
   if (res.ok) {
