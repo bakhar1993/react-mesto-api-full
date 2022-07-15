@@ -9,7 +9,7 @@ const ConflictingRequest = require('../errors/conflicting-request-err');
 module.exports.getAllUsers = (req, res, next) => {
   User.find({}).then((data) => {
     if (data.length >= 1) {
-      res.send({ users: data });
+      res.send(data);
     } else {
       res.status(200).send({ message: 'Пользователи не найдены' });
     }
@@ -21,7 +21,7 @@ module.exports.getAllUsers = (req, res, next) => {
 module.exports.getUserById = (req, res, next) => {
   User.findById(req.params.userId).then((data) => {
     if (data) {
-      res.send({ user: data });
+      res.send(data);
     } else {
       throw new NotFoundError('Пользователь по указанному _id не найден');
     }
@@ -36,7 +36,7 @@ module.exports.getUserById = (req, res, next) => {
 
 module.exports.getUser = (req, res, next) => {
   User.findById(req.user._id).then((user) => {
-    res.status(200).send({ data: user });
+    res.status(200).send(user);
   }).catch((err) => {
     next(err);
   });
@@ -59,7 +59,7 @@ module.exports.createUser = (req, res, next) => {
           next(err);
         })
         .then((user) => {
-          res.send({ user });
+          res.send(user);
         })
         .catch(
           (err) => {
@@ -79,7 +79,7 @@ module.exports.updateUser = (req, res, next) => {
     runValidators: true,
   }).then((data) => {
     if (data) {
-      res.send({ user: data });
+      res.send(data);
     } else {
       throw new NotFoundError('Пользователь с указанным _id не найден');
     }
@@ -99,7 +99,7 @@ module.exports.updateAvatar = (req, res, next) => {
     runValidators: true,
   }).then((data) => {
     if (data) {
-      res.send({ user: data });
+      res.send(data);
     } else {
       throw new NotFoundError('Пользователь с указанным _id не найден');
     }

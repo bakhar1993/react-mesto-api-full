@@ -58,7 +58,7 @@ function App() {
       const token = localStorage.getItem("token");
       getContent(token)
         .then((res) => {
-          setEmail(res.data.email);
+          setEmail(res.email);
           setLoggedIn(true);
           history.push("/");
         })
@@ -141,8 +141,9 @@ function App() {
   }
 
   function handleUpdateUser(userData) {
+    const token = localStorage.getItem("token");
     api
-      .setUserInfo({ userData })
+      .setUserInfo({ userData },token)
       .then((res) => {
         setCurrentUser({ ...currentUser, name: res.name, about: res.about });
         closeAllPopups();
@@ -150,8 +151,9 @@ function App() {
       .catch((error) => console.log(error));
   }
   function handleUpdateAvatar(data) {
+    const token = localStorage.getItem("token");
     api
-      .editAvatar(data)
+      .editAvatar(data,token)
       .then((res) => {
         setCurrentUser({ ...currentUser, avatar: res.avatar  });
         closeAllPopups();
@@ -160,8 +162,9 @@ function App() {
   }
 
   function handleAddCard(data) {
+    const token = localStorage.getItem("token");
     api
-      .addCards(data)
+      .addCards(data,token)
       .then((res) => {
         setCards([res, ...cards]);
         closeAllPopups();
@@ -170,9 +173,10 @@ function App() {
   }
 
   function handleCardLike(card) {
-    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+    const isLiked = card.likes.some((i) => i === currentUser._id);
+    const token = localStorage.getItem("token");
     api
-      .changeLikeCardStatus(card._id, !isLiked)
+      .changeLikeCardStatus(card._id, !isLiked,token)
       .then((newCard) => {
         setCards((state) =>
           state.map((c) => (c._id === card._id ? newCard : c))
@@ -182,8 +186,9 @@ function App() {
   }
 
   function handleCardDelete(card) {
+    const token = localStorage.getItem("token");
     api
-      .deleteCard(card._id)
+      .deleteCard(card._id,token)
       .then(() => {
         setCards((state) => state.filter((elem) => elem !== card));
       })

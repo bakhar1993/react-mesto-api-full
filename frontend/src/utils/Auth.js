@@ -1,5 +1,4 @@
-// export const BASE_URL = "https://auth.nomoreparties.co";
-export const BASE_URL = "http://localhost:3001";
+export const BASE_URL = "http://mesto.bakhar1993.nomorepartiesxyz.ru";
 
 const checkResponse = (res) => {
   if (res.ok) {
@@ -21,6 +20,7 @@ export function authorize(email, password) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      // Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({ email, password }),
   }).then(checkResponse);
