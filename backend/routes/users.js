@@ -1,4 +1,5 @@
 const { celebrate, Joi } = require('celebrate');
+const validator = require('validator');
 const router = require('express').Router();
 const {
   getAllUsers, getUserById, updateUser, updateAvatar, getUser,
@@ -22,7 +23,14 @@ router.patch('/users/me', celebrate({
 // обновляет аватар
 router.patch('/users/me/avatar', celebrate({
   body: Joi.object().keys({
-    avatar: Joi.string().pattern(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,}\.([a-z]{2,4})([/\w]*)#?/),
+    avatar: Joi.string()
+      .required()
+      .custom((value, helpers) => {
+        if (validator.isURL(value)) {
+          return value;
+        } return helpers.message('Заполните поле валидным URL');
+      })
+      .message({ 'string.required': 'Поле не должны быть пустым' }),
   }),
 }), updateAvatar);
 

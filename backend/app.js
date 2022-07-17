@@ -1,4 +1,5 @@
 const express = require('express');
+const validator = require('validator');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const { celebrate, Joi, errors } = require('celebrate');
@@ -39,7 +40,14 @@ app.post('/signup', celebrate({
   body: Joi.object().keys({
     name: Joi.string().min(2).max(30),
     about: Joi.string().min(2).max(30),
-    avatar: Joi.string().pattern(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,}\.([a-z]{2,4})([/\w]*)#?/),
+    avatar: Joi.string()
+      .required()
+      .custom((value, helpers) => {
+        if (validator.isURL(value)) {
+          return value;
+        } return helpers.message('Заполните поле валидным URL');
+      })
+      .message({ 'string.required': 'Поле не должны быть пустым' }),
     email: Joi.string().required().email(),
     password: Joi.string().required(),
   }),

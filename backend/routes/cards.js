@@ -1,5 +1,6 @@
 const { celebrate, Joi } = require('celebrate');
 const router = require('express').Router();
+const validator = require('validator');
 const {
   getCards, createCard, deleteCard, likeCard, dislikeCard,
 } = require('../controllers/cards');
@@ -8,7 +9,16 @@ router.get('/cards', getCards);
 router.post('/cards', celebrate({
   body: Joi.object().keys({
     name: Joi.string().required().min(2).max(30),
-    link: Joi.string().pattern(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,}\.([a-z]{2,4})([/\w]*)#?/),
+    link: Joi.string()
+      .required()
+      .custom((value, helpers) => {
+        if (validator.isURL(value)) {
+          return value;
+        }
+        return helpers.message('Заполните валидным URL');
+      }).message({
+        'string.required': 'Поле не должны быть пустым',
+      }),
   }),
 }), createCard);
 router.delete('/cards/:cardId', celebrate({
