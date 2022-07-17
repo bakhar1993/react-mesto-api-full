@@ -31,21 +31,21 @@ module.exports.createCard = (req, res, next) => {
 
 module.exports.deleteCard = (req, res, next) => {
   Card.findById(req.params.cardId).then((card) => {
-    if (req.user._id === card.owner.toString()) {
-      Card.findByIdAndRemove(req.params.cardId).then((data) => {
-        if (data) {
+    if (card) {
+      if (req.user._id === card.owner.toString()) {
+        Card.findByIdAndRemove(req.params.cardId).then((data) => {
           res.status(200).send(data);
-        } else { throw new NotFoundError('Карточка с указанным _id не найдена'); }
-      }).catch((err) => {
-        if (err.name === 'CastError') {
-          next(BadRequestError('Переданы некорректные данные при удалении карточки'));
-        } else {
-          next(err);
-        }
-      });
-    } else {
-      throw new Forbidden('Вы не можете удалять чужие карточки');
-    }
+        }).catch((err) => {
+          if (err.name === 'CastError') {
+            next(BadRequestError('Переданы некорректные данные при удалении карточки'));
+          } else {
+            next(err);
+          }
+        });
+      } else {
+        throw new Forbidden('Вы не можете удалять чужие карточки');
+      }
+    } else { throw new NotFoundError('Карточка с указанным _id не найдена'); }
   });
 };
 

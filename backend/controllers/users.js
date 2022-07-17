@@ -54,22 +54,26 @@ module.exports.createUser = (req, res, next) => {
       })
         .catch((err) => {
           if (err.code === 11000) {
-            next(ConflictingRequest('Пользователь с таким email уже зарегистрирован'));
+            next(new ConflictingRequest('Пользователь с таким email уже зарегистрирован'));
           }
           next(err);
         })
-        .then((user) => {
-          res.send(user);
-        })
+        .then((user) => res.status(200).send({
+          _id: user._id,
+          name: user.name,
+          about: user.about,
+          avatar: user.avatar,
+          email: user.email,
+        }))
         .catch(
           (err) => {
             if (err.name === 'ValidationError') {
-              next(BadRequestError('Переданы некорректные данные при создании пользователя'));
+              next(new BadRequestError('Переданы некорректные данные при создании пользователя'));
             }
             next(err);
           },
         );
-    });
+    }).catch((err) => { next(err); });
 };
 
 module.exports.updateUser = (req, res, next) => {
