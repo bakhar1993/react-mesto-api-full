@@ -75,9 +75,5 @@ app.use((err, req, res, next) => {
   next();
 });
 
+// eslint-disable-next-line no-console
 app.listen(PORT, () => { console.log('Hello!!!', PORT); });
-
-// const allowedCors = [
-//   'https://mesto.bakhar1993.nomorepartiesxyz.ru',
-//   'http://mesto.bakhar1993.nomorepartiesxyz.ru',
-// ];

@@ -3,4 +3,4 @@
   
 ## Публичный IPv4 51.250.29.120
 ## [Ссылка](http://mesto.bakhar1993.nomorepartiesxyz.ru)
- 
+## [Сервер](http://api.mesto.bakhar1993.nomorepartiesxyz.ru)
